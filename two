@@ -1,0 +1,39 @@
+I am writing to provide an update regarding the issue reported after the January release, where external links on the Digital Brochure screen were occasionally redirecting bankers to incorrect or unrelated content. I am pleased to inform you that the issue has been successfully addressed, and the fix has been deployed to production today.
+
+Background:
+As part of the January release, we introduced a feature to include external links on the Digital Brochure screen, enabling bankers to access relevant external pages directly. However, post-release, we received feedback that some links were redirecting users to incorrect or unrelated content, which impacted the user experience and productivity.
+
+Actions Taken:
+
+Root Cause Identification:
+The issue was traced to inconsistencies in URL mappings and occasional data entry errors during the implementation phase. Additionally, some external pages had undergone updates that were not reflected in our system, leading to outdated links.
+
+Resolution:
+
+A comprehensive audit of all external links was conducted to identify and correct discrepancies.
+
+Incorrect or outdated URLs were updated to ensure they point to the intended external pages.
+
+A validation process was implemented to verify the accuracy of all external links before deployment.
+
+Deployment:
+The fix was thoroughly tested in a staging environment to ensure the issue was resolved. Today, the updated version was successfully promoted to production.
+
+Post-Deployment Validation:
+Following the deployment, the business users conducted extensive testing to validate the functionality. They confirmed that the external links now redirect to the correct pages as intended. The business team has provided formal sign-off, confirming that the issue has been resolved and the feature is functioning as expected.
+
+Next Steps:
+
+Monitoring:
+We will continue to monitor the external links to ensure no further issues arise. Any anomalies will be addressed promptly.
+
+Process Improvement:
+To prevent similar issues in future releases, we will strengthen our quality assurance processes, including enhanced validation checks for external links and better coordination with third-party content providers.
+
+User Communication:
+We will communicate with the bankers to inform them that the issue has been resolved and encourage them to report any further concerns.
+
+Conclusion:
+We appreciate the patience and feedback from the users during this process. The team has worked diligently to resolve the issue and ensure the Digital Brochure screen now delivers the intended functionality. This experience has also provided valuable insights into improving our processes for future releases.
+
+Thank you for your support and understanding. Please feel free to reach out if you have any questions or require further details.
