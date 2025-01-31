@@ -1,0 +1,36 @@
+I would like to bring to your attention an issue that has been reported following the January release, specifically related to the implementation of external links on the Digital Brochure screen. While the feature was designed to enhance user experience by redirecting bankers to relevant external pages, we have received feedback indicating that the functionality is not performing as intended.
+
+Issue Description:
+Bankers have reported that clicking on the external links sometimes results in being directed to incorrect or unrelated content. This inconsistency is causing confusion and frustration among users, as they are unable to access the intended information seamlessly.
+
+Potential Impact:
+
+User Experience: The primary impact is on the user experience. Bankers rely on the Digital Brochure for accurate and relevant information. Being directed to incorrect pages undermines their trust in the platform and hampers their ability to perform their duties effectively.
+
+Productivity: Inefficiencies arise when bankers have to navigate back and forth or seek alternative sources for the information they need, leading to potential delays in their workflows.
+
+Reputation: Persistent issues with functionality can harm the reputation of our digital tools, making users hesitant to rely on them in the future.
+
+Root Cause Analysis:
+Initial investigations suggest that the issue may stem from one or more of the following:
+
+Incorrect URL Mapping: There might be errors in the URL mappings, where the links are not correctly associated with the intended external pages.
+
+Data Entry Errors: During the implementation phase, there could have been mistakes in entering the URLs, leading to incorrect redirections.
+
+Third-Party Changes: External pages might have undergone changes (e.g., URL updates or content restructuring) that were not reflected in our system, causing outdated links to redirect to unrelated content.
+
+Proposed Next Steps:
+
+Comprehensive Audit: Conduct a thorough audit of all external links implemented in the January release to identify and correct any discrepancies in URL mappings.
+
+Validation Process: Establish a robust validation process to ensure that all external links are correctly entered and associated with the intended content before any future releases.
+
+Monitoring Mechanism: Implement a monitoring mechanism to track the performance of external links and quickly identify and address any issues that arise post-release.
+
+User Communication: Communicate with the users to acknowledge the issue, inform them of the steps being taken to resolve it, and provide alternative means to access the required information in the interim.
+
+Conclusion:
+We understand the importance of delivering a seamless and reliable user experience. The team is committed to resolving this issue promptly and implementing measures to prevent similar occurrences in the future. We will keep you updated on our progress and the expected timeline for resolution.
+
+Thank you for your understanding and support.
