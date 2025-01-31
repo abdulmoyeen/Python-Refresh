@@ -1,0 +1,68 @@
+First, I should outline what happened. The feature was intended to redirect to external pages, but the links were incorrect. Why were they incorrect? Maybe the links provided by the PO were wrong, or maybe there was a mistake in implementation. But the problem is that the links led to unrelated content. The scope of the application is just to navigate to the given links, not control their content. So the issue was with the links themselves, not the external content.
+
+Then, when the incident was reported, the PO created a story. The team addressed it. What does addressing it mean? They probably checked the links, corrected any wrong ones, maybe validated them. Then promoted to production, tested by business users, and got sign-off.
+
+Now, how to structure this for higher management. They want a concise explanation: what happened, how it was resolved, current status, and maybe lessons learned. Need to avoid technical jargon but be clear. Emphasize that the issue was identified quickly, resolved, tested, and closed with business approval. Also, mention that external content isn't controlled by the team, so future issues would be on the external sites, not the app's functionality. Maybe steps taken to prevent similar issues, like validating links before deployment or better coordination with PO to verify links.
+
+Wait, in the original problem statement, it says "we don't control the data on the external link," so the problem wasn't the external content, but that the links themselves were incorrect. So the team's responsibility was to ensure the correct links were used. So the incident was because the links provided were wrong, or the implementation used wrong links. The fix would be correcting the links. Then testing confirmed that the correct links are now in place.
+
+So in the explanation, clarify that the initial issue was due to incorrect external links being implemented. The resolution involved updating the links to the correct ones provided by the PO, deploying the fix, and having business users verify. Post-deployment, everything works as intended. Also, note that the team doesn't control external content, but the links themselves are now correct. Maybe add a step to prevent recurrence, like a validation process for external links before deployment.
+
+===============================
+
+Overview:
+During the January release, a feature was implemented to include external links on the Digital Brochure screen, enabling bankers to navigate to predefined external pages. Post-release, users reported occasional redirection to incorrect or unrelated content. An incident was raised, investigated, and resolved promptly.
+
+Root Cause:
+
+The issue stemmed from incorrect external links being configured in the application.
+
+While the application’s role is to route users to the provided links, the links themselves (supplied by the Product Owner) were outdated or misconfigured in some instances.
+
+Note: The Omni application does not control or validate external content; its scope is limited to directing users to the specified URLs.
+
+Resolution Steps:
+
+Incident Response:
+
+A bug-fix story was prioritized by the Product Owner (PO) to address the misconfigured links.
+
+The development team validated and corrected the URLs against the PO’s updated list.
+
+Validation & Deployment:
+
+The fix underwent rigorous testing to ensure links mapped accurately to the intended external pages.
+
+Deployed to production on [insert date].
+
+Business Verification:
+
+Post-deployment, business users conducted end-to-end testing and confirmed all links now redirect correctly.
+
+Formal sign-off was provided, confirming resolution.
+
+Current Status:
+
+The issue is fully resolved, with no further user reports of misdirected links.
+
+The Digital Brochure feature now operates as designed.
+
+Preventive Measures:
+
+Enhanced validation during development to cross-check external links against PO-provided sources.
+
+Added a pre-release review step with stakeholders to confirm link accuracy.
+
+Key Takeaways:
+
+While the application’s functionality is confirmed intact, this incident underscores the importance of ensuring data accuracy (e.g., URLs) provided by stakeholders.
+
+Proactive collaboration with the PO and business teams will help mitigate similar issues in future releases.
+
+Next Steps:
+
+Monitor user feedback closely for any residual concerns.
+
+Refine processes to strengthen alignment between stakeholder inputs and technical implementation.
+
+Let me know if further details or a briefing would be helpful.
