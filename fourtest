@@ -1,0 +1,140 @@
+{
+  "formValidationTests": [
+    {
+      "testName": "Validate Required Fields",
+      "formSelector": "#registrationForm",
+      "submitButton": "button[type='submit']",
+      "fields": [
+        {
+          "selector": "#firstName",
+          "type": "text",
+          "required": true,
+          "errorMessage": "First name is required"
+        },
+        {
+          "selector": "#lastName",
+          "type": "text",
+          "required": true,
+          "errorMessage": "Last name is required"
+        },
+        {
+          "selector": "#email",
+          "type": "email",
+          "required": true,
+          "errorMessage": "Email is required"
+        }
+      ]
+    },
+    {
+      "testName": "Validate Email Format",
+      "formSelector": "#registrationForm",
+      "submitButton": "button[type='submit']",
+      "fields": [
+        {
+          "selector": "#email",
+          "type": "email",
+          "required": true,
+          "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+          "errorMessage": "Invalid email format"
+        }
+      ]
+    },
+    {
+      "testName": "Validate Password Strength",
+      "formSelector": "#registrationForm",
+      "submitButton": "button[type='submit']",
+      "fields": [
+        {
+          "selector": "#password",
+          "type": "password",
+          "required": true,
+          "minLength": 8,
+          "errorMessage": "Password must be at least 8 characters long"
+        },
+        {
+          "selector": "#password",
+          "type": "password",
+          "pattern": "^(?=.*[A-Z])(?=.*[0-9]).+$",
+          "errorMessage": "Password must contain at least one uppercase letter and one number"
+        }
+      ]
+    },
+    {
+      "testName": "Validate Checkbox Selection",
+      "formSelector": "#registrationForm",
+      "submitButton": "button[type='submit']",
+      "fields": [
+        {
+          "selector": "#agreeTerms",
+          "type": "checkbox",
+          "required": true,
+          "errorMessage": "You must agree to the terms"
+        }
+      ]
+    },
+    {
+      "testName": "Validate Numeric Input Range",
+      "formSelector": "#registrationForm",
+      "submitButton": "button[type='submit']",
+      "fields": [
+        {
+          "selector": "#age",
+          "type": "number",
+          "required": true,
+          "min": 18,
+          "max": 99,
+          "errorMessage": "Age must be between 18 and 99"
+        }
+      ]
+    }
+  ]
+}
+
+
+const formValidationTests = require('./formValidationTests.json');
+
+formValidationTests.formValidationTests.forEach(test => {
+  test(test.testName, async ({ page }) => {
+    await page.goto('http://example.com/registration');
+
+    for (const field of test.fields) {
+      const input = await page.$(field.selector);
+
+      // Test required fields
+      if (field.required) {
+        await input.fill(''); // Clear the field
+        await page.click(test.submitButton); // Submit the form
+        await page.waitForSelector('.error-message'); // Wait for error message
+        const errorMessage = await page.$eval('.error-message', el => el.textContent);
+        expect(errorMessage).toBe(field.errorMessage); // Assert error message
+      }
+
+      // Test regex pattern validation
+      if (field.pattern) {
+        await input.fill('invalid-value'); // Fill with invalid data
+        await page.click(test.submitButton); // Submit the form
+        await page.waitForSelector('.error-message'); // Wait for error message
+        const errorMessage = await page.$eval('.error-message', el => el.textContent);
+        expect(errorMessage).toBe(field.errorMessage); // Assert error message
+      }
+
+      // Test min/max length validation
+      if (field.minLength) {
+        await input.fill('a'.repeat(field.minLength - 1)); // Fill with invalid length
+        await page.click(test.submitButton); // Submit the form
+        await page.waitForSelector('.error-message'); // Wait for error message
+        const errorMessage = await page.$eval('.error-message', el => el.textContent);
+        expect(errorMessage).toBe(field.errorMessage); // Assert error message
+      }
+
+      // Test numeric range validation
+      if (field.min !== undefined || field.max !== undefined) {
+        await input.fill(field.min - 1); // Fill with invalid value
+        await page.click(test.submitButton); // Submit the form
+        await page.waitForSelector('.error-message'); // Wait for error message
+        const errorMessage = await page.$eval('.error-message', el => el.textContent);
+        expect(errorMessage).toBe(field.errorMessage); // Assert error message
+      }
+    }
+  });
+});
