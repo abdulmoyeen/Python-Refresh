@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Viewer</title>
+  <link rel="stylesheet" href="/libs/json-viewer/json-viewer.css">
+</head>
+<body>
+  <div id="json-viewer"></div>
+  <script src="/libs/json-viewer/json-viewer.js"></script>
+  <script>
+    const jsonResponse = JSON.parse(`{{JSON_RESPONSE}}`);
+    const viewer = new JSONViewer();
+    document.querySelector("#json-viewer").appendChild(viewer.getContainer());
+    viewer.showJSON(jsonResponse, null, 2);
+  </script>
+</body>
+</html>
