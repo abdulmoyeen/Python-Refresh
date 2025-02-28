@@ -1,19 +1,83 @@
-mkdir -p public/libs/json-viewer
-curl -o public/libs/json-viewer/json-viewer.js https://cdn.jsdelivr.net/npm/@tulios/json-viewer@1.2.0/dist/json-viewer.min.js
-curl -o public/libs/json-viewer/json-viewer.css https://cdn.jsdelivr.net/npm/@tulios/json-viewer@1.2.0/dist/json-viewer.min.css
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JSON Viewer</title>
-  <link rel="stylesheet" href="/libs/json-viewer/json-viewer.css">
+  <style>
+    /* Embedded json-viewer CSS */
+    .json-viewer {
+      color: #000;
+      padding-left: 20px;
+    }
+    .json-viewer .json-viewer-item {
+      display: block;
+    }
+    .json-viewer .json-viewer-key {
+      color: #92278f;
+    }
+    .json-viewer .json-viewer-value {
+      color: #2e8b57;
+    }
+    .json-viewer .json-viewer-collapse {
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
   <div id="json-viewer"></div>
-  <script src="/libs/json-viewer/json-viewer.js"></script>
   <script>
+    // Embedded json-viewer JS
+    function JSONViewer() {
+      this.container = document.createElement('div');
+      this.container.className = 'json-viewer';
+    }
+
+    JSONViewer.prototype.getContainer = function () {
+      return this.container;
+    };
+
+    JSONViewer.prototype.showJSON = function (json, parentElement, level) {
+      level = level || 0;
+      parentElement = parentElement || this.container;
+      const isCollapsible = json && typeof json === 'object' && Object.keys(json).length > 0;
+
+      if (isCollapsible) {
+        const collapseButton = document.createElement('span');
+        collapseButton.className = 'json-viewer-collapse';
+        collapseButton.textContent = '[-]';
+        collapseButton.onclick = function () {
+          const isCollapsed = this.textContent === '[+]';
+          this.textContent = isCollapsed ? '[-]' : '[+]';
+          parentElement.style.display = isCollapsed ? 'block' : 'none';
+        };
+        parentElement.appendChild(collapseButton);
+      }
+
+      for (const key in json) {
+        if (json.hasOwnProperty(key)) {
+          const item = document.createElement('div');
+          item.className = 'json-viewer-item';
+          const keyElement = document.createElement('span');
+          keyElement.className = 'json-viewer-key';
+          keyElement.textContent = key + ': ';
+          item.appendChild(keyElement);
+
+          if (typeof json[key] === 'object' && json[key] !== null) {
+            this.showJSON(json[key], item, level + 1);
+          } else {
+            const valueElement = document.createElement('span');
+            valueElement.className = 'json-viewer-value';
+            valueElement.textContent = JSON.stringify(json[key]);
+            item.appendChild(valueElement);
+          }
+
+          parentElement.appendChild(item);
+        }
+      }
+    };
+
+    // Render JSON
     const jsonResponse = JSON.parse(`{{JSON_RESPONSE}}`);
     const viewer = new JSONViewer();
     document.querySelector("#json-viewer").appendChild(viewer.getContainer());
