@@ -1,3 +1,7 @@
+mkdir -p public/libs/json-viewer
+curl -o public/libs/json-viewer/json-viewer.js https://cdn.jsdelivr.net/npm/@tulios/json-viewer@1.2.0/dist/json-viewer.min.js
+curl -o public/libs/json-viewer/json-viewer.css https://cdn.jsdelivr.net/npm/@tulios/json-viewer@1.2.0/dist/json-viewer.min.css
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
