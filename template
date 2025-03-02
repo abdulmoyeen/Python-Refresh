@@ -85,3 +85,58 @@
   </script>
 </body>
 </html>
+
+import { Page } from '@playwright/test';
+import * as fs from 'fs';
+import * as path from 'path';
+
+export async function renderJson(page: Page, json: object) {
+  // Read the HTML template
+  const templatePath = path.join(__dirname, '../../public/template.html');
+  let htmlContent = fs.readFileSync(templatePath, 'utf-8');
+
+  // Convert JSON to string and escape special characters
+  const jsonString = JSON.stringify(json)
+    .replace(/\\/g, '\\\\') // Escape backslashes
+    .replace(/"/g, '\\"')   // Escape double quotes
+    .replace(/\n/g, '\\n')  // Escape newlines
+    .replace(/\r/g, '\\r')  // Escape carriage returns
+    .replace(/\t/g, '\\t'); // Escape tabs
+
+  // Replace the placeholder with the escaped JSON string
+  htmlContent = htmlContent.replace('{{JSON_RESPONSE}}', jsonString);
+
+  // Render the HTML in the browser
+  await page.setContent(htmlContent, { waitUntil: 'domcontentloaded' });
+}
+
+
+import { test, expect } from '@playwright/test';
+import { renderJson } from './utils/renderJson';
+
+test('Render JSON with collapsible nested objects and take a screenshot', async ({ page }) => {
+  // Sample JSON with nested objects
+  const jsonResponse = {
+    name: 'John',
+    age: 30,
+    address: {
+      city: 'New York',
+      zip: '10001',
+      coordinates: {
+        lat: 40.7128,
+        lng: -74.0060,
+      },
+    },
+    hobbies: ['Reading', 'Traveling', 'Coding'],
+  };
+
+  // Render the JSON in the browser
+  await renderJson(page, jsonResponse);
+
+  // Take a screenshot
+  await page.screenshot({ path: 'screenshots/json-viewer.png', fullPage: true });
+
+  // Verify the JSON structure (optional)
+  const jsonViewerElement = await page.$('#json-viewer');
+  expect(jsonViewerElement).not.toBeNull();
+});
