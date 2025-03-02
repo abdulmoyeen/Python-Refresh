@@ -1,3 +1,26 @@
+const jsonData = { /* your large nested JSON */ };
+const jsonString = JSON.stringify(jsonData, null, 2);
+
+await page.setContent(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/json-viewer@1.2.0/dist/json-viewer.min.css">
+    </head>
+    <body>
+        <div id="json-viewer"></div>
+        <script src="https://cdn.jsdelivr.net/npm/json-viewer@1.2.0/dist/json-viewer.min.js"></script>
+        <script>
+            const jsonViewer = new JSONViewer();
+            document.querySelector("#json-viewer").appendChild(jsonViewer.getContainer());
+            jsonViewer.showJSON(${jsonString});
+        </script>
+    </body>
+    </html>
+`);
+
+await page.screenshot({ path: 'json_viewer_screenshot.png' });
+
 const { chromium } = require('playwright');
 
 (async () => {
