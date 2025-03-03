@@ -1,3 +1,70 @@
+import { chromium } from 'playwright';
+
+async function captureCollapsibleJSONScreenshot(
+  url: string,
+  apiEndpointGlob: string,
+  outputPath: string
+) {
+  const browser = await chromium.launch();
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
+  // Navigate to the target page
+  await page.goto(url);
+
+  // Wait for the API response containing JSON
+  const response = await page.waitForResponse(response => 
+    response.url().includes(apiEndpointGlob) &&
+    response.status() === 200
+  );
+  const jsonData = await response.json();
+
+  // Generate HTML with collapsible JSON viewer
+  const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <script src="https://cdn.jsdelivr.net/npm/json-formatter-js@2.3.4/dist/json-formatter.umd.min.js"></script>
+        <style>
+          .json-container { padding: 20px; background: white; }
+          json-formatter { font-family: sans-serif; }
+        </style>
+      </head>
+      <body>
+        <div class="json-container"></div>
+        <script>
+          const data = ${JSON.stringify(jsonData)};
+          const formatter = new JSONFormatter(data, 1);
+          document.querySelector('.json-container').appendChild(formatter.render());
+        </script>
+      </body>
+    </html>
+  `;
+
+  // Create a new page and load the HTML content
+  const jsonPage = await context.newPage();
+  await jsonPage.setContent(htmlContent);
+  
+  // Capture screenshot of the formatted JSON
+  await jsonPage.screenshot({ 
+    path: outputPath,
+    fullPage: true // Ensures the entire JSON content is captured
+  });
+
+  // Cleanup
+  await jsonPage.close();
+  await browser.close();
+}
+
+// Example Usage
+captureCollapsibleJSONScreenshot(
+  'https://your-application-url.com',
+  '/api/data',
+  'json-screenshot.png'
+);
+
+
+
 const jsonData = { /* your large nested JSON */ };
 const jsonString = JSON.stringify(jsonData, null, 2);
 
